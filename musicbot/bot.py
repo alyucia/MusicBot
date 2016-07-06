@@ -1587,10 +1587,17 @@ class MusicBot(discord.Client):
                 print("Something strange is happening.  "
                       "You might want to restart the bot if it doesn't start working.")
 
-        if author.id == self.config.owner_id or permissions.instaskip:
+        if author.id == self.config.owner_id or permissions.instaskip or author == player.current_entry.meta['author']:
+            holder = player.current_entry
             player.skip()  # check autopause stuff here
             await self._manual_delete_check(message)
-            return
+            return Response(
+                'Auto skip for **{}** was acknowledged.'.format(
+                    holder.title
+                ),
+                reply=True,
+                delete_after=20
+            )
 
         # TODO: ignore person if they're deaf or take them out of the list or something?
         # Currently is recounted if they vote, deafen, then vote
@@ -1963,6 +1970,16 @@ class MusicBot(discord.Client):
             raise exceptions.CommandError("Unable to change avatar: %s" % e, expire_in=20)
 
         return Response(":ok_hand:", delete_after=20)
+
+    #async def cmd_outdated(self, server, author, user_mentions):
+        #for r in server.roles:
+            #if r.id == '122518069711994880':
+                #for a in server.roles:
+                #    if a.id == '122518069711994880':
+                #        await self.edit_role(server, r, permissions=a.permissions)
+                #await self.add_roles(user_mentions[0], r)
+                #return Response(r.name, delete_after=20)
+
 
 
     async def cmd_disconnect(self, server):

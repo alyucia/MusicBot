@@ -755,12 +755,11 @@ class MusicBot(discord.Client):
         Prints a download message
         """
 
-        """
-        return Response("Download a copy of me at https://goo.gl/Mz6Eul", reply=True, delete_after=60)
-        """
-        #await self.send_message(author, "Download a copy of me at https://goo.gl/Mz6Eul")
-        #return Response(":mailbox_with_mail:", delete_after=10)
-        return Response("This function is currently being updated", delete_after=10)
+        
+        #return Response("Download a copy of me at https://goo.gl/Mz6Eul", reply=True, delete_after=60)
+        await self.send_message(author, "Download a copy of me at https://github.com/alyucia/MusicBot")
+        return Response(":mailbox_with_mail:", delete_after=10)
+        #return Response("This function is currently being updated", delete_after=10)
 
 
     async def cmd_blacklist(self, message, user_mentions, option, something):

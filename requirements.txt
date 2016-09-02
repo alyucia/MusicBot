@@ -1,6 +1,4 @@
-<<<<<<< HEAD
 discord.py[voice]
-=======
-https://github.com/Rapptz/discord.py/archive/async.zip
-youtube_dl >= 2016.4.24
->>>>>>> 0d8263462a99389a3b8d8cdac7feb35d03c89259
+youtube_dl
+pip
+cffi==1.6.0; sys_platform == 'win32'

@@ -80,6 +80,7 @@ class MusicBot(discord.Client):
 
         self.blacklist = set(load_file(self.config.blacklist_file))
         self.toggle = []
+        self.togglev = []
         self.noskip = False
         self.autoplaylist = load_file(self.config.auto_playlist_file)
         self.downloader = downloader.Downloader(download_folder='audio_cache')
@@ -891,6 +892,49 @@ class MusicBot(discord.Client):
                 return Response('none of those users are in the hitlist.', reply=True, delete_after=10)
 
 
+    async def cmd_togglev(self, message, user_mentions, option, something):
+        """
+        Usage:
+            {command_prefix}toggle [@user]
+        """
+        if not user_mentions:
+            raise exceptions.CommandError("No users listed.", expire_in=20)
+
+        if option not in ['+', '-', 'add', 'remove']:
+            raise exceptions.CommandError(
+                'Invalid option "%s" specified, use +, -, add, or remove' % option, expire_in=20
+            )
+
+        #for user in user_mentions.copy():
+         #   if user.id == self.config.owner_id:
+          #      print("Really?")
+           #     user_mentions.remove(user)
+            #    return Response("Don't try that again you little shitter.", reply=True, delete_after=10)
+
+        old_len = len(self.togglev)
+
+        if option in ['+', 'add']:
+            self.togglev.append(user_mentions[0])
+
+            return Response(
+                '%s users have been added to the hitlist' % (len(self.togglev) - old_len),
+                reply=True, delete_after=10
+            )
+
+        else:
+            if user_mentions[0] in self.togglev:
+                self.togglev.remove(user_mentions[0])
+
+                return Response(
+                    '%s users have been removed from the shitlist' % (old_len - len(self.togglev)),
+                    reply=True, delete_after=10
+                )
+
+            else:
+                return Response('none of those users are in the shitlist.', reply=True, delete_after=10)
+
+
+
     async def cmd_play(self, player, channel, author, permissions, leftover_args, song_url):
         """
         Usage:
@@ -1642,6 +1686,10 @@ class MusicBot(discord.Client):
         Sets the playback volume. Accepted values are from 1 to 100.
         Putting + or - before the volume will make the volume change relative to the current volume.
         """
+
+        if author in self.togglev:
+            return Response('Ay, suck a dick mate', reply=True, delete_after=20)
+            return
 
         if not new_volume:
             return Response('Current volume: `%s%%`' % int(player.volume * 100), reply=True, delete_after=20)

@@ -917,7 +917,7 @@ class MusicBot(discord.Client):
             self.togglev.append(user_mentions[0])
 
             return Response(
-                '%s users have been added to the hitlist' % (len(self.togglev) - old_len),
+                '%s users have been added to the shitlist' % (len(self.togglev) - old_len),
                 reply=True, delete_after=10
             )
 
@@ -1678,7 +1678,7 @@ class MusicBot(discord.Client):
                 delete_after=20
             )
 
-    async def cmd_volume(self, message, player, new_volume=None):
+    async def cmd_volume(self, message, player, author, new_volume=None):
         """
         Usage:
             {command_prefix}volume (+/-)[volume]

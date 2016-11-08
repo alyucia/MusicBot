@@ -1555,6 +1555,9 @@ class MusicBot(discord.Client):
             {command_prefix}remove n
         Removes the nth song in queue
         """
+        if self.noskip and author.id != self.config.owner_id:
+            raise exceptions.CommandError("Cannot remove. Bot is currently in noskip mode!", expire_in=20)
+
         if int(index) > len(player.playlist.entries):
             return Response('Invalid number.', delete_after=20)
 

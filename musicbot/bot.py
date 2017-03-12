@@ -855,6 +855,9 @@ class MusicBot(discord.Client):
         Usage:
             {command_prefix}toggle [@user]
         """
+
+        return Response("This command is disabled. Sorry!", delete_after=30)
+        
         if not user_mentions:
             raise exceptions.CommandError("No users listed.", expire_in=20)
 
@@ -1140,6 +1143,8 @@ class MusicBot(discord.Client):
         futari from a futari search is added to the queue.
         """
 
+        return Response("This command is disabled. Sorry!", delete_after=30)
+
         song_url = 'https://soundcloud.com/tyler-velazquez-1/kiss-x-sis-futari-no-honey-boy'
 
         entry, position = await player.playlist.add_entry(song_url, channel=channel, author=author)
@@ -1169,6 +1174,7 @@ class MusicBot(discord.Client):
         Adds the nigger to the playlist.  If a link is not provided, the first
         nigger from a nigger search is added to the queue.
         """
+        return Response("This command is disabled. Sorry!", delete_after=30)
 
         song_url = 'https://www.youtube.com/watch?v=mYnenIWZjwE'
 
